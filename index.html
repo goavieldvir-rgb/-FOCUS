@@ -181,6 +181,12 @@
   .content-block ul{margin:0 0 14px; padding-inline-start:22px;}
   .content-block li{margin-bottom:7px; font-size:14.5px;}
   .content-block li strong{color:var(--navy);}
+  .mode-tag{
+    display:inline-block; font-size:11px; font-weight:700; padding:2px 9px; border-radius:20px;
+    margin-inline-start:6px; vertical-align:middle; white-space:nowrap;
+  }
+  .mode-tag.mode-sea{background:#DCEEF1; color:#0d5c68;}
+  .mode-tag.mode-both{background:#F3E9C7; color:#7a5a05;}
   .content-block .rule{
     background:var(--paper-dim); border-inline-start:3px solid var(--err); border-radius:4px;
     padding:12px 16px; margin:14px 0; font-size:13.8px; color:#5b3323;
@@ -375,35 +381,39 @@ const MODULES = [
     infographicImg: "media/module1-infographic.png",
     podcast: "media/module1-podcast.m4a",
     content: `
-      <p class="lead">Incoterms הם כללים בינלאומיים אחידים (בהוצאת ICC) המגדירים את חלוקת האחריות, העלויות והסיכונים בין המוכר (היצואן) לקונה (היבואן) בעסקה מסחרית. תנאי המכר משפיעים ישירות על התמחור, על שטר המטען (B/L / AWB) ועל הערך המדווח למכס בהצהרת היצוא/יבוא. התנאים מסווגים לארבע קבוצות לפי האות הראשונה בקיצור — E, F, C ו-D — המשקפות את מידת האחריות הגוברת של המוכר.</p>
+      <p class="lead">Incoterms הם כללים בינלאומיים אחידים (בהוצאת ICC) המגדירים את חלוקת האחריות, העלויות והסיכונים בין המוכר (היצואן) לקונה (היבואן) בעסקה מסחרית. תנאי המכר משפיעים ישירות על התמחור, על שטר המטען (B/L / AWB) ועל הערך המדווח למכס בהצהרת היצוא/יבוא. התנאים מסווגים לארבע קבוצות לפי האות הראשונה בקיצור — E, F, C ו-D — המשקפות את מידת האחריות הגוברת של המוכר. ליד כל תנאי מצוין גם באילו אמצעי הובלה ניתן להשתמש בו.</p>
 
       <h4>קבוצה E — יציאה (Departure): אחריות מינימלית למוכר</h4>
       <ul>
-        <li><strong>EXW (Ex Works)</strong> — איסוף ממפעל המוכר. האחריות והעלויות של המוכר מסתיימות ברצפת המפעל שלו; הקונה נושא בכל העלויות והסיכונים מהמפעל ועד היעד הסופי, כולל הובלה יבשתית במוצא, מכס ומטען.</li>
+        <li><strong>EXW (Ex Works)</strong> <span class="mode-tag mode-both">✈️🚢 כל אמצעי הובלה</span> — איסוף ממפעל המוכר. האחריות והעלויות של המוכר מסתיימות ברצפת המפעל שלו; הקונה נושא בכל העלויות והסיכונים מהמפעל ועד היעד הסופי, כולל הובלה יבשתית במוצא, מכס ומטען.</li>
       </ul>
 
       <h4>קבוצה F — הובלה ראשית לא שולמה על ידי המוכר</h4>
       <ul>
-        <li><strong>FOB (Free on Board)</strong> — מסירה על סיפון האונייה, נפוץ בהובלה ימית. המוכר אחראי על ההובלה המקומית, שחרור ממכס יצוא וטעינת המטען על גבי האונייה/מטוס בנמל המוצא. מהרגע שהמטען על האונייה, כל העלויות והסיכונים (הובלה ימית/אווירית, ביטוח ומכס יבוא) עוברים לקונה.</li>
-        <li><strong>FCA (Free Carrier)</strong> — המוכר מוסר את הטובין למוביל שצוין על ידי הקונה, במקום המוסכם; הסיכון עובר לקונה באותו רגע.</li>
+        <li><strong>FCA (Free Carrier)</strong> <span class="mode-tag mode-both">✈️🚢 כל אמצעי הובלה</span> — המוכר מוסר את הטובין למוביל שצוין על ידי הקונה, במקום המוסכם; הסיכון עובר לקונה באותו רגע. זהו התנאי המקביל ל-FOB כשמדובר בהובלה אווירית.</li>
+        <li><strong>FOB (Free on Board)</strong> <span class="mode-tag mode-sea">🚢 ימי בלבד</span> — מסירה על סיפון האונייה. המוכר אחראי על ההובלה המקומית, שחרור ממכס יצוא וטעינת המטען על גבי האונייה בנמל המוצא. מהרגע שהמטען על האונייה, כל העלויות והסיכונים (הובלה ימית, ביטוח ומכס יבוא) עוברים לקונה.</li>
       </ul>
 
       <h4>קבוצה C — הובלה ראשית שולמה על ידי המוכר</h4>
       <ul>
-        <li><strong>CFR / CPT (Cost and Freight / Carriage Paid To)</strong> — המוכר משלם את הובלת המטען עד לנמל/נמל התעופה ביעד. העברת הסיכון מתרחשת ברגע שהמטען נטען על כלי התחבורה במוצא, אך העלות שולמה ע"י המוכר עד היעד.</li>
-        <li><strong>CIF / CIP (Cost, Insurance and Freight / Carriage and Insurance Paid To)</strong> — זהה ל-CFR/CPT, אך המוכר מחויב לרכוש גם פוליסת ביטוח ימי/אווירי לטובת הקונה עבור המשלוח.</li>
+        <li><strong>CPT (Carriage Paid To)</strong> <span class="mode-tag mode-both">✈️🚢 כל אמצעי הובלה</span> — המוכר משלם את הובלת המטען עד ליעד (כולל הובלה אווירית). העברת הסיכון מתרחשת ברגע שהמטען נמסר למוביל הראשון במוצא, אך העלות שולמה ע"י המוכר עד היעד.</li>
+        <li><strong>CIP (Carriage and Insurance Paid To)</strong> <span class="mode-tag mode-both">✈️🚢 כל אמצעי הובלה</span> — זהה ל-CPT, אך המוכר מחויב לרכוש גם פוליסת ביטוח לטובת הקונה עבור המשלוח.</li>
+        <li><strong>CFR (Cost and Freight)</strong> <span class="mode-tag mode-sea">🚢 ימי בלבד</span> — מקביל ל-CPT אך מיועד ייחודית להובלה ימית; המוכר משלם את ההובלה עד לנמל היעד.</li>
+        <li><strong>CIF (Cost, Insurance and Freight)</strong> <span class="mode-tag mode-sea">🚢 ימי בלבד</span> — מקביל ל-CIF, ימי בלבד: המוכר משלם הובלה ימית וגם ביטוח עד לנמל היעד.</li>
       </ul>
 
       <h4>קבוצה D — הגעה (Arrival): מירב האחריות על המוכר</h4>
       <ul>
-        <li><strong>DAP (Delivered at Place)</strong> — מסירה באתר הקונה. המוכר אחראי להביא את המטען עד לפתח היעד בחו"ל, כולל הובלה ראשית ויבשתית ביעד. הקונה אחראי רק על תשלום המכס והמיסים המקומיים ביעד.</li>
-        <li><strong>DDU (Delivered Duty Unpaid)</strong> — מונח ותיק (מ-Incoterms 2000, הוחלף רשמית ב-DAP ב-2010 אך עדיין נפוץ בשימוש מעשי). המוכר מוסר את הטובין ליעד המוסכם, אך <strong>מבלי</strong> לשלם מכס או מיסי יבוא — אלה נותרים באחריות הקונה, בדומה ל-DAP.</li>
-        <li><strong>DDP (Delivered Duty Paid)</strong> — מסירה כולל מיסים שולמו. המוכר נושא בכל העלויות, הסיכונים, ההובלות והמיסים עד למסירת המטען בבית העסק של הקונה — רמת האחריות הגבוהה ביותר מבין כל התנאים.</li>
+        <li><strong>DAP (Delivered at Place)</strong> <span class="mode-tag mode-both">✈️🚢 כל אמצעי הובלה</span> — מסירה באתר הקונה. המוכר אחראי להביא את המטען עד לפתח היעד בחו"ל, כולל הובלה ראשית ויבשתית ביעד. הקונה אחראי רק על תשלום המכס והמיסים המקומיים ביעד.</li>
+        <li><strong>DDU (Delivered Duty Unpaid)</strong> <span class="mode-tag mode-both">✈️🚢 כל אמצעי הובלה</span> — מונח ותיק (מ-Incoterms 2000, הוחלף רשמית ב-DAP ב-2010 אך עדיין נפוץ בשימוש מעשי). המוכר מוסר את הטובין ליעד המוסכם, אך <strong>מבלי</strong> לשלם מכס או מיסי יבוא — אלה נותרים באחריות הקונה, בדומה ל-DAP.</li>
+        <li><strong>DDP (Delivered Duty Paid)</strong> <span class="mode-tag mode-both">✈️🚢 כל אמצעי הובלה</span> — מסירה כולל מיסים שולמו. המוכר נושא בכל העלויות, הסיכונים, ההובלות והמיסים עד למסירת המטען בבית העסק של הקונה — רמת האחריות הגבוהה ביותר מבין כל התנאים.</li>
       </ul>
+
+      <div class="rule"><strong>לתשומת לב:</strong> תנאי ה-FOB, CFR ו-CIF מיועדים ייחודית להובלה ימית (ולעיתים גם נהרית), כי הם מוגדרים סביב מסירה "על סיפון האונייה". לכן במשלוח אווירי, ה-FOCUS משתמש בתנאים המקבילים המתאימים לכל אמצעי הובלה: FCA במקום FOB, ו-CPT/CIP במקום CFR/CIF.</div>
 
       <h4>המשמעות במערכת FOCUS ובשער עולמי</h4>
       <ul>
-        <li><strong>תנאי תשלום ההובלה:</strong> ב-EXW/FOB (קבוצות E/F) המשלוח הוא במעמד Collect (תשלום ביעד); ב-CIF/DAP (קבוצות C/D) המשלוח הוא במעמד Prepaid (תשלום במקור).</li>
+        <li><strong>תנאי תשלום ההובלה:</strong> ב-EXW/FOB/FCA (קבוצות E/F) המשלוח הוא במעמד Collect (תשלום ביעד); בקבוצות C/D המשלוח הוא במעמד Prepaid (תשלום במקור).</li>
         <li><strong>חישוב ערך למכס:</strong> סוג ה-Incoterm קובע אם ערך העסקה כולל הובלה וביטוח או לא, ומשפיע על חישוב ערך הטובין בהצהרת היצוא/יבוא.</li>
       </ul>
     `,
