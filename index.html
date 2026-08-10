@@ -205,6 +205,46 @@
   video, audio{width:100%; border-radius:var(--radius);}
   .infographic-frame img{width:100%; display:block; border-radius:var(--radius);}
 
+  /* ---------- Built infographic component ---------- */
+  .infographic-wrap{padding:4px;}
+  .info-banner{
+    background:var(--navy); color:var(--paper); border-radius:6px; padding:22px 24px; margin-bottom:22px;
+    text-align:center;
+  }
+  .info-banner h4{font-size:20px; color:var(--paper); margin:0 0 6px;}
+  .info-banner p{margin:0; font-size:13.5px; color:#C7D2DB;}
+  .info-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px; margin-bottom:18px;}
+  .info-card{
+    background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:18px;
+    position:relative;
+  }
+  .info-card .info-num{
+    position:absolute; top:-12px; inset-inline-start:14px;
+    width:26px; height:26px; border-radius:50%; background:var(--brass); color:var(--navy-deep);
+    font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center;
+  }
+  .info-card .info-icon{font-size:26px; margin-bottom:8px; display:block;}
+  .info-card h5{font-family:'Frank Ruhl Libre',serif; color:var(--navy); font-size:15.5px; margin:0 0 8px;}
+  .info-card p{margin:0; font-size:13px; color:var(--ink-soft); line-height:1.55;}
+  .info-card ul{margin:6px 0 0; padding-inline-start:18px;}
+  .info-card li{font-size:12.8px; color:var(--ink-soft); margin-bottom:4px;}
+  .info-flowline{
+    display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap;
+    margin:2px 0 22px; font-size:12.5px; font-weight:700;
+  }
+  .info-flowline span{background:var(--navy); color:var(--paper); padding:6px 12px; border-radius:20px;}
+  .info-flowline em{color:var(--brass); font-style:normal;}
+  .info-warning{
+    background:#FBEBE7; border:1px solid #E3A891; border-inline-start:4px solid var(--err);
+    border-radius:6px; padding:14px 16px; margin-top:6px; font-size:13px; color:#7A2F1C;
+  }
+  .info-warning strong{display:block; margin-bottom:2px; color:var(--err);}
+  .info-table{width:100%; border-collapse:collapse; font-size:12.8px; margin-top:6px;}
+  .info-table th{background:var(--navy); color:var(--paper); padding:9px 10px; text-align:right; font-weight:700;}
+  .info-table td{padding:9px 10px; border-bottom:1px solid var(--line); color:var(--ink);}
+  .info-table tr:nth-child(even) td{background:var(--paper-dim);}
+  .info-section-title{font-family:'Frank Ruhl Libre',serif; color:var(--navy); font-size:16px; margin:24px 0 12px;}
+
   /* ---------- Flashcards ---------- */
   .flash-wrap{display:flex; flex-direction:column; align-items:center; gap:16px;}
   .flash-card{
@@ -285,6 +325,8 @@ const MODULES = [
     desc: "כללים בינלאומיים אחידים (בהוצאת ה-ICC) המגדירים את חלוקת האחריות, העלויות והסיכונים בין המוכר לקונה, ומשפיעים ישירות על תמחור, שטר המטען והערך המדווח למכס.",
     tags: ["בסיס תיאורטי", "סחר בינלאומי"],
     video: "media/module1-incoterms.mp4",
+    infographicImg: "media/module1-infographic.png",
+    podcast: "media/module1-podcast.m4a",
     content: `
       <p class="lead">Incoterms הם כללים בינלאומיים אחידים (בהוצאת ICC) המגדירים את חלוקת האחריות, העלויות והסיכונים בין המוכר (היצואן) לקונה (היבואן) בעסקה מסחרית. תנאי המכר משפיעים ישירות על התמחור, על שטר המטען (B/L / AWB) ועל הערך המדווח למכס בהצהרת היצוא/יבוא.</p>
 
@@ -348,6 +390,69 @@ const MODULES = [
     desc: "מחזור החיים המלא של משלוח אווירי במערכת FOCUS: קבלת הזמנה, פתיחת תיק, גורמים מעורבים, פרטי מטען, AWB ושידורים, מכס ומעקב, חיוב וסגירה.",
     tags: ["FOCUS", "אווירי"],
     video: "media/module2-focus-air.mp4",
+    infographic: `
+      <div class="infographic-wrap">
+        <div class="info-banner">
+          <h4>מסעו של משלוח אווירי — תהליך העבודה במערכת FOCUS</h4>
+          <p>מהקמת התיק ועד למסירה: כל שלב, כל מסמך, וכל נקודת החלטה קריטית</p>
+        </div>
+
+        <div class="info-flowline">
+          <span>יצירת תיק דיגיטלי</span><em>◄</em><span>קביעת משקל לחיוב</span><em>◄</em><span>פרוטוקול הגורמים</span><em>◄</em><span>מעקב טיסה</span><em>◄</em><span>שידורים ומכס</span><em>◄</em><span>סגירה כספית</span>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <span class="info-icon">📁</span>
+            <h5>יצירת תיק דיגיטלי ו-Master Data</h5>
+            <p>לכל משלוח מוקצה מזהה ייחודי המקושר לרשימת גורמים מאומתת מראש ("Master Data").</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">⚖️</span>
+            <h5>קביעת משקל לחיוב</h5>
+            <p>החיוב מבוסס תמיד על הערך הגבוה מבין המשקל הפיזי לבין המשקל הנפחי.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">👥</span>
+            <h5>פרוטוקול הגורמים (Parties)</h5>
+            <p>כל השולחים, הנמענים והמובילים חייבים להיבחר מתוך מסד הנתונים המרכזי בלבד — לא הקלדה חופשית.</p>
+          </div>
+        </div>
+
+        <div class="info-section-title">MAWB מול HAWB</div>
+        <div class="info-grid">
+          <div class="info-card">
+            <span class="info-icon">🌐</span>
+            <h5>MAWB</h5>
+            <p>שטר המטען המאסטר — מסדיר את החוזה מול חברת התעופה.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">🧑‍💼</span>
+            <h5>HAWB</h5>
+            <p>שטר המטען ההאוס — מנהל את מערכת היחסים מול הלקוח הסופי.</p>
+          </div>
+        </div>
+
+        <div class="info-section-title">מעבר בטיסה, שידורים ומכס</div>
+        <div class="info-grid">
+          <div class="info-card">
+            <span class="info-icon">📡</span>
+            <h5>שידורים אלקטרוניים ומכס</h5>
+            <p>יש לשדר את מסרי FWB/FHL ולקבל התרת מכס לפני העמסת המטען.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">💰</span>
+            <h5>סגירה כספית ותפעולית</h5>
+            <p>תיקים נסגרים רק לאחר אימות חיוב לקוח, הוצאות ספקים, אבני הדרך והרווח הנקי.</p>
+          </div>
+        </div>
+
+        <div class="info-section-title">אבני הדרך של המשלוח</div>
+        <div class="info-flowline">
+          <span>BKD — הוזמן</span><em>◄</em><span>DEP — המריא</span><em>◄</em><span>ARR — נחת</span><em>◄</em><span>DLV — נמסר</span>
+        </div>
+      </div>
+    `,
     content: `
       <p class="lead">מערכת Focus מנהלת את מחזור החיים המלא של משלוח אווירי, משלב קבלת ההזמנה ועד סגירת התיק הכספית.</p>
       <div class="flow">
@@ -419,6 +524,64 @@ const MODULES = [
     desc: "שרשרת התהליך המלאה ביצוא ימי: הזמנה, INTTRA BOOKING, SPED, FILE, מסמכי שיפינג ושידור, ועד התרת מכס וסגירת תיק — כולל מושגי המפתח FCL, LCL, MBL, HBL, VGM ועוד.",
     tags: ["FOCUS", "ימי"],
     video: "media/module3-focus-sea.mp4",
+    podcast: "media/module3-podcast.m4a",
+    infographic: `
+      <div class="infographic-wrap">
+        <div class="info-banner">
+          <h4>תהליך יצוא ימי — מחזור החיים של משלוח ב-FOCUS</h4>
+          <p>מערכת FOCUS מנהלת את כל תהליך היצוא הימי: מהזמנת הלקוח והזמנת מקום באונייה, דרך הלוגיסטיקה היבשתית, ועד למסמכי היצוא הסופיים</p>
+        </div>
+
+        <div class="info-section-title">שלושת שלבי מחזור החיים</div>
+        <div class="info-grid">
+          <div class="info-card">
+            <span class="info-num">1</span>
+            <span class="info-icon">📝</span>
+            <h5>הזמנה ו-INTTRA BOOKING</h5>
+            <p>קליטת דרישות הלקוח במערכת ושידור בקשת מקום באונייה לחברות הספנות דרך פלטפורמת INTTRA.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-num">2</span>
+            <span class="info-icon">🚚</span>
+            <h5>לוגיסטיקה יבשתית (SPED) ותיק מרכזי</h5>
+            <p>ניהול איסוף ומסירת המכולה דרך תיק ה-SPED, תוך ריכוז שטר המטען והמכס בתיק (FILE) המרכזי.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-num">3</span>
+            <span class="info-icon">📦</span>
+            <h5>הוראות שיפינג (SI)</h5>
+            <p>שליחת נתוני מכולה, פלומבות ומשקלים לחברת הספנות, לצורך הפקת טיוטת שטר המטען (Draft B/L).</p>
+          </div>
+        </div>
+
+        <div class="info-warning">
+          <strong>ציות קריטי — VGM ו-Cut-off</strong>
+          פספוס מועד ה-Cut-off או אי-הצהרת משקל VGM עלולים לגרום להחמצת ההפלגה כליל.
+        </div>
+
+        <div class="info-section-title">מושגי יסוד</div>
+        <div class="info-grid">
+          <div class="info-card">
+            <span class="info-icon">📦</span>
+            <h5>FCL מול LCL</h5>
+            <p><strong>FCL</strong> — מכולה מלאה ללקוח יחיד. <strong>LCL</strong> — מכולה קבוצתית המאחדת מטענים של מספר לקוחות.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">📜</span>
+            <h5>Master B/L מול House B/L</h5>
+            <p><strong>MBL</strong> — החוזה מול חברת הספנות. <strong>HBL</strong> — החוזה מול הלקוח הסופי.</p>
+          </div>
+        </div>
+
+        <div class="info-section-title">מזהי שילוח קריטיים</div>
+        <table class="info-table">
+          <tr><th>מזהה</th><th>תיאור</th><th>דרישה</th></tr>
+          <tr><td>מספר פלומבה (Seal)</td><td>המנעול הפיזי על המכולה</td><td>חייב להתאים ל-SI ולמכס</td></tr>
+          <tr><td>VGM</td><td>משקל ברוטו מאומת</td><td>חובה לטעינה על האונייה</td></tr>
+          <tr><td>Cut-off Time</td><td>מועד הסגירה הקשיח בנמל</td><td>לא ניתן למשא ומתן</td></tr>
+        </table>
+      </div>
+    `,
     content: `
       <p class="lead">תהליך יצוא ימי ב-Focus עובר בשרשרת הבאה:</p>
       <div class="flow">
@@ -483,6 +646,7 @@ const MODULES = [
     desc: "מבנה הצהרת היצוא, שלבי השידור לשער עולמי, מסלולי הבדיקה (ירוק/צהוב/אדום) וכללי הברזל להתאמה בין המסמכים לפני קבלת התרת המכס.",
     tags: ["מכס", "הצהרות"],
     video: "media/module4-export-declaration.mp4",
+    podcast: "media/module4-podcast.m4a",
     content: `
       <p class="lead">הצהרת יצוא (Shipping Declaration) היא הדיווח המשפטי הרשמי לרשות המכס בישראל, באמצעות מערכת "שער עולמי". ההצהרה מהווה תנאי סף לקבלת התרת מכס (Customs Release) לטעינת מטען על גבי אונייה או מטוס, וכן מאפשרת זיכוי היצואן במע"מ בשיעור אפס.</p>
 
@@ -531,6 +695,60 @@ const MODULES = [
     desc: "מהות תעודת ה-EUR.1, שלבי ההפקה בתפריט Documents/Print, ופרוטוקול ההדפסה והאישור המחייב טיוטה ואישור לקוח לפני הדפסת המקור.",
     tags: ["EUR.1", "מקור מועדף"],
     video: "media/module5-eur1.mp4",
+    infographic: `
+      <div class="infographic-wrap">
+        <div class="info-banner">
+          <h4>מדריך מהיר: שליטה בתהליך תעודת EUR.1</h4>
+          <p>EUR.1 היא תעודת יצוא חיונית לפטורי מכס. המדריך מסביר את השלבים הדיגיטליים ב-FOCUS ואת פרוטוקול ההדפסה הפיזי הקריטי למסמך תקין וללא טעויות</p>
+        </div>
+
+        <div class="info-section-title">שלב 1: הפקה דיגיטלית ב-FOCUS</div>
+        <div class="info-grid">
+          <div class="info-card">
+            <span class="info-num">1</span>
+            <span class="info-icon">🖥️</span>
+            <h5>ניווט למסמכי יצוא</h5>
+            <p>בתפריט Documents/Print, בחרו "29. New Export Docs".</p>
+          </div>
+          <div class="info-card">
+            <span class="info-num">2</span>
+            <span class="info-icon">📄</span>
+            <h5>הגדרת סוג המסמך</h5>
+            <p>בחרו EUR1 כ-Doc Type ואשרו ב-OK.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-num">3</span>
+            <span class="info-icon">🖨️</span>
+            <h5>הפעלת פקודת הדפסה</h5>
+            <p>לחצו Print להכנת ההדפסה הפיזית.</p>
+          </div>
+        </div>
+
+        <div class="info-section-title">שלב 2: פרוטוקול הדפסה ואישור קריטי</div>
+        <div class="info-grid">
+          <div class="info-card">
+            <span class="info-icon">📋</span>
+            <h5>תמיד בצעו הדפסת ניסיון</h5>
+            <p>צלמו את התעודה המקורית והדפיסו ניסיון ראשון על העותק המצולם בלבד — לעולם לא על המקור.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">🖨️</span>
+            <h5>יישור טעינת המדפסת</h5>
+            <p>הניחו את הדף כשהכיתוב פונה כלפי מטה וראש הדף פונה אליכם, במגירת הנייר.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">✅</span>
+            <h5>דרישת אישור הלקוח</h5>
+            <p>שלחו את הדפסת הניסיון במייל לאישור הלקוח, לפני ההדפסה על נייר המקור הרשמי.</p>
+          </div>
+        </div>
+
+        <div class="info-warning">
+          <strong>כלל ברזל</strong>
+          לעולם אל תדפיסו ישירות על נייר המקור — רק לאחר אישור סופי בכתב מהלקוח.
+        </div>
+      </div>
+    `,
     content: `
       <p class="lead">תעודת EUR.1 היא תעודת מקור רשמית המיועדת למשלוחי יצוא מישראל למדינות האיחוד האירופי ומדינות הסכם סחר חופשי. התעודה מעניקה ליבואן בחו"ל פטור מלא או הנחה משמעותית מתשלומי מכס, ובכך מחזקת את התחרותיות של היצואן הישראלי.</p>
 
@@ -573,6 +791,68 @@ const MODULES = [
     desc: "מבנה תיק העבודה במערכת FOCUS (Parties, Cargo & Routing, Financials), מפת המסך ועץ התיק, וחמשת כללי הברזל שכל עובד חדש חייב להכיר.",
     tags: ["מדריך כללי", "חפיפה"],
     video: "media/module6-onboarding.mp4",
+    infographic: `
+      <div class="infographic-wrap">
+        <div class="info-banner">
+          <h4>כללי הזהב לעובד חדש</h4>
+          <p>ניווט במערכת האקולוגית של FOCUS, מבנה עץ התיק וחמשת הכללים שכל עובד חדש חייב להכיר</p>
+        </div>
+
+        <div class="info-section-title">ארכיטקטורת שלושת העמודים</div>
+        <div class="info-grid">
+          <div class="info-card">
+            <span class="info-icon">👥</span>
+            <h5>Parties — מי</h5>
+            <p>הגורמים המעורבים במשלוח: שולח, נמען, סוכן ומוביל.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">🚢</span>
+            <h5>Cargo & Routing — מה/איפה</h5>
+            <p>פרטי המטען, המסלול וכלי התחבורה.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">💰</span>
+            <h5>Financials — כסף</h5>
+            <p>חיוב הלקוח, הוצאות הספקים והתחשבנות הרווח.</p>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--ink-soft);margin:0 0 22px;">כל תיק במערכת מקשר בין שלושת העמודים הללו — ומשם מסתעף עץ התיק (Tree View): General Details, Routing, Documents ו-Accounting, לצד סרגל חיפוש חכם לפי מספר תיק, AWB/BL, מספר מכולה או שם לקוח.</p>
+
+        <div class="info-section-title">חמשת כללי הזהב</div>
+        <div class="info-grid">
+          <div class="info-card">
+            <span class="info-num">1</span>
+            <span class="info-icon">🛡️</span>
+            <h5>הקפידו על Master Data</h5>
+            <p>לעולם אל תקלידו טקסט חופשי לגורמים — תמיד בחרו מתוך הרשימה המאומתת.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-num">2</span>
+            <span class="info-icon">✉️</span>
+            <h5>פרוטוקול "טיוטה קודם"</h5>
+            <p>שלחו טיוטות ללקוחות לאישור לפני הדפסת מסמכים מקוריים כמו EUR.1 או AWB.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-num">3</span>
+            <span class="info-icon">⏰</span>
+            <h5>סטטוסים ומועדים בזמן אמת</h5>
+            <p>עדכנו סטטוסי DEP/ARR מיידית ושדרו למכס/למובילים לפני מועד ה-Cut-off.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-num">4</span>
+            <span class="info-icon">🧹</span>
+            <h5>שמרו על סדר</h5>
+            <p>סגרו באופן שוטף תיקים שהושלמו, לשמירה על ביצועי המערכת.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-num">5</span>
+            <span class="info-icon">🔒</span>
+            <h5>אבטחת הגישה שלכם</h5>
+            <p>לעולם אל תשתפו סיסמה, ונעלו את המסך בכל פעם שאתם מתרחקים.</p>
+          </div>
+        </div>
+      </div>
+    `,
     content: `
       <p class="lead">מערכת Focus היא מערכת ERP לוגיסטית מרכזית. כל תיק עבודה (Shipment/SPED/File) מקשר בין שלוש ישויות: Parties (גורמים), Cargo &amp; Routing (מטען ומסלול), ו-Financials (כספים וחשבוניות).</p>
 
@@ -725,11 +1005,12 @@ function renderModule(m){
   <section class="block" id="infographic-${m.id}">
     <div class="block-head"><div class="block-icon">▤</div><h3>אינפוגרפיקה</h3></div>
     <div class="card">
+      ${m.infographicImg ? `<div class="infographic-frame"><img src="${m.infographicImg}" alt="אינפוגרפיקה: ${m.title}"></div>` : (m.infographic || `
       <div class="placeholder">
         <strong>האינפוגרפיקה עדיין לא הועלתה</strong>
         טרם צורפה תמונה/PDF לנושא זה.
         <small>ניתן לשלוח קובץ תמונה או PDF ואטמיע אותו כאן, או אכין גרסה חלופית אם הקובץ המקורי לא ניתן להטמעה.</small>
-      </div>
+      </div>`)}
     </div>
   </section>
 
@@ -761,11 +1042,12 @@ function renderModule(m){
   <section class="block" id="podcast-${m.id}">
     <div class="block-head"><div class="block-icon">♪</div><h3>פודקאסט הסברי</h3></div>
     <div class="card">
+      ${m.podcast ? `<audio controls preload="metadata" src="${m.podcast}"></audio>` : `
       <div class="placeholder">
         <strong>הפודקאסט עדיין לא הועלה</strong>
         טרם צורף קובץ שמע לנושא זה.
         <small>ברגע שיישלח קובץ אודיו — הוא יוטמע כאן באמצעות נגן &lt;audio&gt;.</small>
-      </div>
+      </div>`}
     </div>
   </section>
   `;
