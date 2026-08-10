@@ -415,7 +415,17 @@ const MODULES = [
       {q:"מי אחראי על תשלום מכס ומיסים ביעד בתנאי DAP?", a:"הקונה — המוכר מביא את המטען עד פתח היעד, אך הקונה משלם את המכס והמיסים המקומיים."},
       {q:"מהו התנאי שבו המוכר נושא בכל האחריות עד בית העסק של הקונה, כולל מיסים?", a:"DDP — Delivered Duty Paid."},
       {q:"מהו DDU ובמה הוא שונה מ-DDP?", a:"Delivered Duty Unpaid — מונח ותיק שהוחלף רשמית ב-DAP ב-2010. בדומה ל-DAP, המוכר מוסר את הטובין ליעד אך הקונה משלם את המכס — בשונה מ-DDP שבו המוכר משלם גם את המכס."},
-      {q:"כיצד משפיע סוג ה-Incoterm על מעמד התשלום בהובלה ב-FOCUS?", a:"ב-EXW/FOB המשלוח במעמד Collect (תשלום ביעד); ב-CIF/DAP המשלוח במעמד Prepaid (תשלום במקור)."}
+      {q:"כיצד משפיע סוג ה-Incoterm על מעמד התשלום בהובלה ב-FOCUS?", a:"ב-EXW/FOB המשלוח במעמד Collect (תשלום ביעד); ב-CIF/DAP המשלוח במעמד Prepaid (תשלום במקור)."},
+      {q:"מהו הפירוש המלא של EXW?", a:"Ex Works — איסוף מהמפעל."},
+      {q:"מהו הפירוש המלא של FCA?", a:"Free Carrier — חופשי אצל המוביל."},
+      {q:"מהו הפירוש המלא של FOB?", a:"Free On Board — חופשי על הסיפון."},
+      {q:"מהו הפירוש המלא של CFR?", a:"Cost and Freight — עלות והובלה."},
+      {q:"מהו הפירוש המלא של CPT?", a:"Carriage Paid To — הובלה שולמה עד."},
+      {q:"מהו הפירוש המלא של CIF?", a:"Cost, Insurance and Freight — עלות, ביטוח והובלה."},
+      {q:"מהו הפירוש המלא של CIP?", a:"Carriage and Insurance Paid To — הובלה וביטוח שולמו עד."},
+      {q:"מהו הפירוש המלא של DAP?", a:"Delivered At Place — מסירה במקום המוסכם."},
+      {q:"מהו הפירוש המלא של DDU?", a:"Delivered Duty Unpaid — מסירה ללא תשלום מכס."},
+      {q:"מהו הפירוש המלא של DDP?", a:"Delivered Duty Paid — מסירה כולל מכס משולם."}
     ],
     quiz: [
       {q:"באיזה תנאי מסתיימת אחריות המוכר כבר ברצפת המפעל?", opts:["FOB","DDP","EXW","CIF"], correct:2},
@@ -1023,6 +1033,25 @@ window.addEventListener('DOMContentLoaded', render);
 function render(){
   const hash = location.hash.replace('#','') || 'home';
   const app = document.getElementById('app');
+
+  /* In-page section anchors (e.g. content-2, video-3, quiz-5) used by the
+     module TOC — these must scroll within the current module, not be
+     treated as a top-level route (which would bounce back to home). */
+  const sectionMatch = hash.match(/^(content|video|infographic|flashcards|quiz|podcast)-(\d+)$/);
+  if(sectionMatch){
+    const modId = parseInt(sectionMatch[2]);
+    const mod = MODULES.find(m=>m.id===modId);
+    if(mod){
+      if(!document.getElementById(`content-${modId}`)){
+        app.innerHTML = renderModule(mod);
+        attachModuleHandlers(mod);
+      }
+      const target = document.getElementById(hash);
+      if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      return;
+    }
+  }
+
   if(hash.startsWith('module-')){
     const id = parseInt(hash.split('-')[1]);
     const mod = MODULES.find(m=>m.id===id);
