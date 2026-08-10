@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>מרכז הלמידה | אינקוטרמס, FOCUS ויצוא</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@300;400;500;600;700;800&family=Suez+One&display=swap" rel="stylesheet">
 <style>
   :root{
     --navy:#0F2942;
@@ -205,45 +205,92 @@
   video, audio{width:100%; border-radius:var(--radius);}
   .infographic-frame img{width:100%; display:block; border-radius:var(--radius);}
 
-  /* ---------- Built infographic component ---------- */
-  .infographic-wrap{padding:4px;}
+  /* ---------- Built infographic component (hand-drawn sketchbook style) ---------- */
+  .infographic-wrap{
+    position:relative; padding:26px 22px 20px;
+    background:
+      radial-gradient(circle at 8px 8px, rgba(15,41,66,.05) 1px, transparent 1.4px) 0 0/16px 16px,
+      #FBF8F0;
+    border:1px solid var(--line); border-radius:10px;
+  }
+  .infographic-wrap::before{
+    content:'✦'; position:absolute; top:6px; left:14px; font-size:20px; color:var(--brass);
+    transform:rotate(14deg);
+  }
+  .infographic-wrap::after{
+    content:'⚙'; position:absolute; top:8px; right:16px; font-size:18px; color:var(--teal); opacity:.55;
+    transform:rotate(-16deg);
+  }
   .info-banner{
-    background:var(--navy); color:var(--paper); border-radius:6px; padding:22px 24px; margin-bottom:22px;
-    text-align:center;
+    position:relative; background:var(--navy); color:var(--paper);
+    padding:22px 26px; margin-bottom:26px; text-align:center;
+    border:2.5px solid var(--navy-deep);
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    transform:rotate(-0.4deg);
+    box-shadow:5px 5px 0 rgba(201,162,39,.35);
   }
-  .info-banner h4{font-size:20px; color:var(--paper); margin:0 0 6px;}
+  .info-banner::before{
+    content:'★'; position:absolute; bottom:-14px; left:22px; font-size:15px; color:var(--brass-light);
+    transform:rotate(-12deg);
+  }
+  .info-banner::after{
+    content:'➜'; position:absolute; bottom:-13px; right:22px; font-size:15px; color:#A9BAC4;
+    transform:rotate(10deg);
+  }
+  .info-banner h4{
+    font-family:'Suez One', 'Frank Ruhl Libre', serif; font-weight:400; font-size:21px;
+    color:var(--paper); margin:0 0 8px; letter-spacing:.3px;
+  }
   .info-banner p{margin:0; font-size:13.5px; color:#C7D2DB;}
-  .info-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px; margin-bottom:18px;}
+  .info-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:22px 18px; margin-bottom:22px;}
   .info-card{
-    background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:18px;
+    background:#fff; border:2px solid var(--navy); padding:19px 18px 17px;
     position:relative;
+    border-radius:225px 16px 220px 16px/16px 220px 16px 225px;
+    box-shadow:4px 4px 0 var(--brass-light);
+    transition:transform .15s ease;
   }
+  .info-card:nth-child(odd){transform:rotate(-0.7deg);}
+  .info-card:nth-child(even){transform:rotate(0.6deg);}
+  .info-card:hover{transform:rotate(0deg) translateY(-2px);}
   .info-card .info-num{
-    position:absolute; top:-12px; inset-inline-start:14px;
-    width:26px; height:26px; border-radius:50%; background:var(--brass); color:var(--navy-deep);
+    position:absolute; top:-14px; inset-inline-start:16px;
+    width:28px; height:28px; border-radius:50%; background:var(--brass); color:var(--navy-deep);
     font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center;
+    border:2px solid var(--navy-deep); transform:rotate(-6deg);
   }
-  .info-card .info-icon{font-size:26px; margin-bottom:8px; display:block;}
-  .info-card h5{font-family:'Frank Ruhl Libre',serif; color:var(--navy); font-size:15.5px; margin:0 0 8px;}
+  .info-card .info-icon{font-size:27px; margin-bottom:8px; display:block; transform:rotate(-3deg);}
+  .info-card h5{font-family:'Suez One','Frank Ruhl Libre',serif; font-weight:400; color:var(--navy); font-size:16px; margin:0 0 8px;}
   .info-card p{margin:0; font-size:13px; color:var(--ink-soft); line-height:1.55;}
   .info-card ul{margin:6px 0 0; padding-inline-start:18px;}
   .info-card li{font-size:12.8px; color:var(--ink-soft); margin-bottom:4px;}
   .info-flowline{
-    display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap;
-    margin:2px 0 22px; font-size:12.5px; font-weight:700;
+    display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+    margin:2px 0 26px; font-size:12.5px; font-weight:700;
   }
-  .info-flowline span{background:var(--navy); color:var(--paper); padding:6px 12px; border-radius:20px;}
-  .info-flowline em{color:var(--brass); font-style:normal;}
+  .info-flowline span{
+    background:var(--navy); color:var(--paper); padding:7px 14px;
+    border-radius:225px 15px 220px 15px/15px 220px 15px 225px;
+    border:1.5px dashed var(--brass-light);
+  }
+  .info-flowline em{color:var(--brass); font-style:normal; font-size:15px;}
   .info-warning{
-    background:#FBEBE7; border:1px solid #E3A891; border-inline-start:4px solid var(--err);
-    border-radius:6px; padding:14px 16px; margin-top:6px; font-size:13px; color:#7A2F1C;
+    background:#FBEBE7; border:2px dashed var(--err);
+    border-radius:18px 190px 18px 190px/190px 18px 190px 18px;
+    padding:15px 20px; margin-top:8px; font-size:13px; color:#7A2F1C;
+    transform:rotate(-0.3deg);
   }
-  .info-warning strong{display:block; margin-bottom:2px; color:var(--err);}
-  .info-table{width:100%; border-collapse:collapse; font-size:12.8px; margin-top:6px;}
+  .info-warning strong{display:block; margin-bottom:2px; color:var(--err); font-family:'Suez One',serif; font-weight:400; font-size:14.5px;}
+  .info-table{width:100%; border-collapse:collapse; font-size:12.8px; margin-top:6px; border:2px solid var(--navy); border-radius:8px; overflow:hidden;}
   .info-table th{background:var(--navy); color:var(--paper); padding:9px 10px; text-align:right; font-weight:700;}
   .info-table td{padding:9px 10px; border-bottom:1px solid var(--line); color:var(--ink);}
   .info-table tr:nth-child(even) td{background:var(--paper-dim);}
-  .info-section-title{font-family:'Frank Ruhl Libre',serif; color:var(--navy); font-size:16px; margin:24px 0 12px;}
+  .info-section-title{
+    display:inline-block; font-family:'Suez One','Frank Ruhl Libre',serif; font-weight:400;
+    color:var(--navy); font-size:16.5px; margin:26px 0 14px; padding:5px 16px;
+    border:2px dashed var(--brass); border-radius:225px 15px 220px 15px/15px 220px 15px 225px;
+    background:#fff; transform:rotate(-0.6deg);
+  }
 
   /* ---------- Flashcards ---------- */
   .flash-wrap{display:flex; flex-direction:column; align-items:center; gap:16px;}
