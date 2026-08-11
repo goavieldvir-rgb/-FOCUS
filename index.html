@@ -340,6 +340,57 @@
 
   footer{border-top:1px solid var(--line); margin-top:70px; padding:26px 24px; text-align:center; color:var(--ink-soft); font-size:12.5px;}
 
+  /* ---------- Search widget ---------- */
+  #search-fab{
+    position:fixed; bottom:22px; left:22px; z-index:80;
+    width:54px; height:54px; border-radius:50%; border:none;
+    background:var(--navy); color:var(--paper); font-size:22px;
+    box-shadow:0 6px 18px rgba(8,24,38,.3); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .15s ease, background .15s ease;
+  }
+  #search-fab:hover{background:var(--navy-deep); transform:scale(1.06);}
+  #search-overlay{
+    display:none; position:fixed; inset:0; background:rgba(8,24,38,.45); z-index:89;
+  }
+  #search-overlay.open{display:block;}
+  #search-panel{
+    position:fixed; z-index:90; bottom:0; left:0; right:0; max-width:520px; margin:0 auto;
+    background:var(--paper); border-radius:14px 14px 0 0; box-shadow:0 -8px 30px rgba(8,24,38,.3);
+    max-height:75vh; display:flex; flex-direction:column;
+    transform:translateY(110%); transition:transform .25s ease;
+  }
+  #search-panel.open{transform:translateY(0);}
+  @media (min-width:640px){
+    #search-panel{ bottom:22px; left:22px; right:auto; border-radius:14px; width:420px; max-width:calc(100vw - 44px); }
+  }
+  .search-panel-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 18px; border-bottom:1px solid var(--line);
+  }
+  .search-panel-title{font-family:'Frank Ruhl Libre',serif; font-weight:700; color:var(--navy); font-size:16px;}
+  #search-close{background:none; border:none; font-size:16px; color:var(--ink-soft); cursor:pointer; padding:4px 8px;}
+  #search-close:hover{color:var(--navy);}
+  .search-input-wrap{padding:14px 18px 8px;}
+  #search-input{
+    width:100%; padding:11px 14px; border:1.5px solid var(--line); border-radius:8px;
+    font-family:'Assistant',sans-serif; font-size:14.5px; background:#fff; color:var(--ink);
+  }
+  #search-input:focus{outline:none; border-color:var(--navy);}
+  .search-hint{padding:2px 18px 10px; font-size:11.5px; color:#8b8878;}
+  #search-results{overflow-y:auto; padding:0 10px 16px; flex:1;}
+  .search-result{
+    display:block; width:100%; text-align:right; background:#fff; border:1px solid var(--line);
+    border-radius:8px; padding:11px 13px; margin:0 8px 8px; cursor:pointer;
+  }
+  .search-result:hover{border-color:var(--navy);}
+  .search-result .sr-top{display:flex; justify-content:space-between; gap:8px; margin-bottom:4px;}
+  .search-result .sr-module{font-size:11.5px; font-weight:700; color:var(--teal);}
+  .search-result .sr-type{font-size:10.5px; color:#8b8878; background:var(--paper-dim); padding:2px 8px; border-radius:10px;}
+  .search-result .sr-snippet{font-size:13px; color:var(--ink); line-height:1.5;}
+  .search-result mark{background:#F3E9C7; color:var(--navy-deep); border-radius:2px; padding:0 1px;}
+  .search-empty{padding:26px 14px; text-align:center; color:var(--ink-soft); font-size:13.5px;}
+
   @media (max-width:640px){
     .hero{padding-top:36px; gap:28px;}
     .hero-seal{width:140px; height:140px;}
@@ -367,6 +418,21 @@
 <main id="app"></main>
 
 <footer>מרכז למידה פנימי — אינקוטרמס, מערכת FOCUS, הצהרות יצוא ותעודות EUR.1 · לשימוש פנימי בלבד</footer>
+
+<button id="search-fab" aria-label="חיפוש בחומר הלימוד" title="חיפוש בחומר הלימוד">🔍</button>
+
+<div id="search-overlay"></div>
+<div id="search-panel" role="dialog" aria-label="חיפוש בחומר הלימוד">
+  <div class="search-panel-head">
+    <span class="search-panel-title">חיפוש בחומר הלימוד</span>
+    <button id="search-close" aria-label="סגירה">✕</button>
+  </div>
+  <div class="search-input-wrap">
+    <input id="search-input" type="text" placeholder="הקלידו מונח או שאלה, למשל: מהו FOB, VGM, Chargeable Weight..." autocomplete="off">
+  </div>
+  <div id="search-hint" class="search-hint">מחפש בתוך התוכן הכתוב, הכרטיסיות והשאלונים של כל 6 הנושאים. זהו חיפוש טקסטואלי בתוך האתר — לא צ'אט AI.</div>
+  <div id="search-results"></div>
+</div>
 
 <script>
 /* ===================== DATA ===================== */
@@ -1292,6 +1358,138 @@ function attachModuleHandlers(m){
   }
   drawQuiz();
 }
+
+/* ===================== SEARCH WIDGET (client-side, no AI) ===================== */
+const STOPWORDS = new Set(['של','את','עם','גם','אני','הוא','היא','הם','הן','זה','זו','אלה','אשר','כי','אם','לא','כן','יש','אין','על','אל','כל','או','רק','עוד','כמו','כך','זאת','היה','יהיה','להיות','אלו','מה','מי','איך','למה','מתי','כאשר','בין','לפי','עד','מן','מ-','ה-','ו-','ל-','ב-','ש-']);
+
+function buildSearchIndex(){
+  const idx = [];
+  MODULES.forEach(m=>{
+    idx.push({modId:m.id, title:m.title, anchor:`module-${m.id}`, type:'נושא', text:`${m.title} ${m.desc}`});
+
+    if(m.content){
+      const div = document.createElement('div');
+      div.innerHTML = m.content;
+      div.querySelectorAll('li, p').forEach(el=>{
+        const txt = el.textContent.replace(/\s+/g,' ').trim();
+        if(txt.length > 12){
+          idx.push({modId:m.id, title:m.title, anchor:`content-${m.id}`, type:'תוכן לימוד', text:txt});
+        }
+      });
+    }
+
+    (m.flashcards||[]).forEach(fc=>{
+      idx.push({modId:m.id, title:m.title, anchor:`flashcards-${m.id}`, type:'כרטיסיית זכרון', text:`${fc.q} ${fc.a}`});
+    });
+
+    (m.quiz||[]).forEach(q=>{
+      idx.push({modId:m.id, title:m.title, anchor:`quiz-${m.id}`, type:'שאלון', text:`${q.q} ${q.opts.join(' ')}`});
+    });
+  });
+  return idx;
+}
+
+function tokenize(str){
+  return str
+    .toLowerCase()
+    .split(/[^\u0590-\u05FFa-z0-9.]+/)
+    .map(t=>t.trim())
+    .filter(t=>t.length>=2 && !STOPWORDS.has(t));
+}
+
+function scoreEntry(queryTokens, text){
+  const lower = text.toLowerCase();
+  let score = 0;
+  queryTokens.forEach(qt=>{
+    if(lower.includes(qt)) score += qt.length >= 4 ? 3 : 1;
+  });
+  return score;
+}
+
+function highlight(text, queryTokens){
+  let out = text;
+  queryTokens.forEach(qt=>{
+    if(qt.length < 2) return;
+    const re = new RegExp('(' + qt.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+    out = out.replace(re, '<mark>$1</mark>');
+  });
+  return out;
+}
+
+let SEARCH_INDEX = null;
+
+function runSearch(query){
+  if(!SEARCH_INDEX) SEARCH_INDEX = buildSearchIndex();
+  const resultsEl = document.getElementById('search-results');
+  const qTokens = tokenize(query);
+
+  if(!query.trim() || qTokens.length === 0){
+    resultsEl.innerHTML = '';
+    return;
+  }
+
+  const scored = SEARCH_INDEX
+    .map(entry => ({ entry, score: scoreEntry(qTokens, entry.text) }))
+    .filter(r => r.score > 0)
+    .sort((a,b) => b.score - a.score)
+    .slice(0, 8);
+
+  if(scored.length === 0){
+    resultsEl.innerHTML = `<div class="search-empty">לא נמצאו תוצאות עבור "${query}".<br>נסו מונח אחר או קצר יותר.</div>`;
+    return;
+  }
+
+  resultsEl.innerHTML = scored.map(({entry}) => {
+    let snippet = entry.text;
+    if(snippet.length > 160){
+      const lowerSnippet = snippet.toLowerCase();
+      const hitIdx = qTokens.map(qt=>lowerSnippet.indexOf(qt)).filter(i=>i>=0).sort((a,b)=>a-b)[0] || 0;
+      const start = Math.max(0, hitIdx - 50);
+      snippet = (start>0?'…':'') + snippet.slice(start, start+160) + (start+160<snippet.length?'…':'');
+    }
+    return `
+      <div class="search-result" data-anchor="${entry.anchor}">
+        <div class="sr-top">
+          <span class="sr-module">${entry.title}</span>
+          <span class="sr-type">${entry.type}</span>
+        </div>
+        <div class="sr-snippet">${highlight(snippet, qTokens)}</div>
+      </div>
+    `;
+  }).join('');
+
+  resultsEl.querySelectorAll('.search-result').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      closeSearch();
+      navigate(el.dataset.anchor);
+    });
+  });
+}
+
+function openSearch(){
+  document.getElementById('search-panel').classList.add('open');
+  document.getElementById('search-overlay').classList.add('open');
+  const input = document.getElementById('search-input');
+  setTimeout(()=>input.focus(), 150);
+}
+function closeSearch(){
+  document.getElementById('search-panel').classList.remove('open');
+  document.getElementById('search-overlay').classList.remove('open');
+}
+
+document.getElementById('search-fab').addEventListener('click', openSearch);
+document.getElementById('search-close').addEventListener('click', closeSearch);
+document.getElementById('search-overlay').addEventListener('click', closeSearch);
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') closeSearch();
+});
+
+let searchDebounce;
+document.getElementById('search-input').addEventListener('input', (e)=>{
+  clearTimeout(searchDebounce);
+  const val = e.target.value;
+  searchDebounce = setTimeout(()=> runSearch(val), 150);
+});
 </script>
 </body>
 </html>
